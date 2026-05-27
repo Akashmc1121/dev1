@@ -13,7 +13,7 @@ pipeline {
 
     stages {
 
-        
+       
         stage('Echo Stage') {
             steps {
                 echo 'Pipeline Started'
@@ -21,44 +21,27 @@ pipeline {
             }
         }
 
-       
+   
         stage('Git Clone') {
             steps {
                 git 'https://github.com/jenkins-docs/simple-java-maven-app.git'
             }
         }
 
-        
+    
         stage('Maven Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
 
-      
         stage('Test Stage') {
             steps {
                 sh 'mvn test'
             }
         }
 
-      
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -t ${DOCKER_IMAGE} .'
-            }
-        }
-
-      
-        stage('Deploy Stage') {
-            steps {
-                echo 'Deploying Application'
-                sh 'docker run -d -p 8080:8080 ${DOCKER_IMAGE}'
-            }
-        }
-    }
-
-  
+       
     post {
 
         success {
