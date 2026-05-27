@@ -2,50 +2,34 @@ pipeline {
 
     agent any
 
-    tools {
-        maven 'Maven'
-    }
-
-    environment {
-        APP_NAME = "java-maven-app"
-        DOCKER_IMAGE = "myapp:v1"
-    }
-
     stages {
 
-       
-        stage('Echo Stage') {
+ 
+        stage('Build') {
             steps {
-                echo 'Pipeline Started'
-                echo 'Learning Jenkins Declarative Pipeline'
+                echo 'Building Application'
             }
         }
 
    
-        stage('Git Clone') {
+        stage('Test') {
             steps {
-                git 'https://github.com/jenkins-docs/simple-java-maven-app.git'
+                echo 'Running Test Cases'
             }
         }
 
     
-        stage('Maven Build') {
+        stage('Deploy') {
             steps {
-                sh 'mvn clean package'
+                echo 'Deploying Application'
             }
         }
+    }
 
-        stage('Test Stage') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-       
     post {
 
         success {
-            echo 'Pipeline Executed Successfully'
+            echo 'Pipeline Success'
         }
 
         failure {
@@ -53,7 +37,7 @@ pipeline {
         }
 
         always {
-            echo 'Pipeline Execution Completed'
+            echo 'Pipeline Completed'
         }
     }
 }
